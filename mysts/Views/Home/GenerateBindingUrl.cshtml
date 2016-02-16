@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Generate Account Binding Url";
+}
+
+<h2>Generate Account Binding Url</h2>
+
+<hr>
+
+<div>
+    <input id="upn_lower" type="text" placeholder="UPN Lowercase">
+    <br />
+    <input id="upn_upper" type="text" placeholder="UPN Uppercase">
+    <br />
+    <input id="primary_sid" type="text" placeholder="Primary SID">
+    <br />
+    <input id="name" type="text" placeholder="Name">
+    <br />
+    <br />
+    <input id="result" type="text" readonly placeholder="result" style="width: 900px">
+</div>
+
+<button id="generate-button">Generate</button>
+
+<script>
+
+(function () {
+    var $ = function (id) {
+        return document.getElementById(id);
+    };
+
+    var getValue = function (id) {
+        return $(id).value;
+    };
+
+    $('generate-button').onclick = function () {
+        var ret = '/Home/Binding/?';
+        ['upn_lower', 'upn_upper', 'primary_sid', 'name'].forEach(function (key) {
+            ret += encodeURIComponent(key) + '=' + encodeURIComponent(getValue(key)) + '&';
+        });
+        // remove last `&`
+        ret = ret.substring(0, ret.length - 1);
+
+        $('result').value = ret;
+    };
+})();
+
+</script>
+
